@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const [cep,setcep] = useState ({});
+function UseFetchbrasilapi () {
+const [cep,setcep] = useState ('');
 const [loading, setLoading] = useState (true);
 const [error, setError] = useState (false);
+ 
+useEffect (() => {
 
- useEffect (() => {
       const getData = async () => {
         try {
           const res = await 
-          axios.get(` https://brasilapi.com.br
+          axios.get(` https://https://viacep.com.br/
           /api/v2/cep/${cep}`,{},)
           setcep(res.data);
           console.log('Success:', res.data);
@@ -25,5 +27,5 @@ const [error, setError] = useState (false);
       };
       getData();
     },[cep]);
-
-     export default useFetchbrasilapi;
+}
+     export default UseFetchbrasilapi;
