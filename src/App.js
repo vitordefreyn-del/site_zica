@@ -1,24 +1,26 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import  useFetchbrasilapi from './useFetchbrasilapi.js';
+import { useParams } from "react-router-dom";
+
 
 function App() {
+  const { id } = useParams();
+  const{cep} = brasilapi(id);
+ 
+  if(loading) return 
+  <div className="loader">
+  Carregando Cep. . . </div>;
+  if (error) return 
+  <div className="error">
+  ocorreu um erro inesperado </div>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div classname= "background pai">
+      <div class name usuario>
+
+      </div>
     </div>
   );
 }
