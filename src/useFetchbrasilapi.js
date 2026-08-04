@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function UseFetchbrasilapi () {
-const [cep,setcep] = useState ('');
-const [loading, setLoading] = useState (true);
+function useFetchbrasilApi (cep) {
+const [dados, setDados] = useState({});
+const [loading, setLoading] = useState (false);
 const [error, setError] = useState (false);
  
 useEffect (() => {
 
+ if (!cep) {
+    return;
+  }
+
       const getData = async () => {
         try {
+
+        setLoading(true);
+        setError(false);
+
           const res = await 
-          axios.get(` https://https://viacep.com.br/
-          /api/v2/cep/${cep}`,{},)
-          setcep(res.data);
+          axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+          setDados(res.data);
           console.log('Success:', res.data);
           setLoading(false); 
           
@@ -27,5 +34,11 @@ useEffect (() => {
       };
       getData();
     },[cep]);
+
+     return {
+    dados,
+    loading,
+    error,
+  };
 }
-     export default UseFetchbrasilapi;
+     export default useFetchbrasilApi;

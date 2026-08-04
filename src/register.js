@@ -1,55 +1,70 @@
 import { useState } from 'react';
+import useFetchbrasilApi from "./useFetchbrasilApi";
 import './register.css';
-import axios from 'axios';
+
 function Registrar() {
   //states controlados pelo componente
   const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState(0);
+  const [telefone, setTelefone] = useState('');
   const [cep, setCep] = useState('');
-  const [endereco, setEndereco] = useState(null);
+
+   const { dados, loading, error } = useFetchbrasilApi(cep);
   //manipuladores do formulario para editar variaveis de estado
   const manipularNome = (e) => {
     setNome(e.target.value);
-    console.log(nome);
+    console.log(e.target.value);
   };
   const manipularTel = (e) => {
     setTelefone(e.target.value);
-    console.log(telefone);
+    console.log(e.target.value);
   };
   const manipularCep = (e) => {
-    setCep(e.target.value);
-    console.log(cep);
+    const valorCep = e.target.value.replace(/\D/g, '');
+  setCep(valorCep);
+
+  console.log(valorCep);
   };
 
   //Manipulador do botão para executar uma ação
-  const manipularBotao = async (e) => {
+  const manipularBotao = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.get(
-        `https://viacep.com.br/ws/01001000/json/`,
-      );
-      setEndereco(response.data);
-      console.log(endereco);
-    } catch (e) {
-      console.error(e);
-    }
+    
+     console.log("Nome:", nome);
+    console.log("Telefone:", telefone);
+    console.log("Endereço:", dados);
   };
+
 
   //Formulario de cadastro
   return (
     <div>
       <form className='formRegistro'>
-        Registrar novo endereço
+        <h2>Registrar novo endereço</h2>
         <label className='labelRegistro'>Nome</label>
-        <input className='inputRegistro' onChange={manipularNome}></input>
+        <input className='inputRegistro' onChange=
+        {manipularNome}></input>
         <label className='labelRegistro'>Telefone</label>
-        <input className='inputRegistro' onChange={manipularTel}></input>
+        <input className='inputRegistro' onChange=
+        {manipularTel}></input>
         <label className='labelRegistro'>CEP</label>
-        <input className='inputRegistro' onChange={manipularCep}></input>
-        <button className='buttonRegistro' onClick={manipularBotao}>
+        <input className='inputRegistro' onChange=
+        {manipularCep}></input>
+        <button className='buttonRegistro' onClick=
+        {manipularBotao}>
           Enviar
         </button>
       </form>
+      {/* Exibição de mensagens de erro */}
+     {error && <p style={{ color: 'red' }}>Erro ao buscar CEP</p>}
+      {/* Exibição dos dados retornados */}
+      {dados.logradouro && (
+        <div className='resultadoEndereco'>
+          <h3>Endereço Encontrado:</h3>
+          <p>Rua: {dados.logradouro}</p>
+          <p>Bairro: {dados.bairro}</p>
+          <p>Cidade: {dados.localidade} - {dados.uf}</p>
+    </div>
+      )}
     </div>
   );
 }
