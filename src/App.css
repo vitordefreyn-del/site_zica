@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.background_pai {
+width: 100%;
+height: 100%;
+ background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+position: absolute;
+}
+.background_filhoinfos  {
+ 
+  background-color: rgba(30, 84, 233, 0.445) ;
+ text-align: center;
+ justify-content: center;
+ display: flex;
+ margin: 0 auto;
+ margin-top: 5%;
+ width: 80%;
+ height: 65%;
+ padding: 20px;
+ position: relative;
+ 
+}
+
